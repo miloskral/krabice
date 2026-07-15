@@ -128,14 +128,17 @@
           <div class="kv"><span>Dopočítané rozmery</span><b id="dEst">—</b></div>
 
           <div class="field">
-            <label>Zmeniť veľkosť — zadaj cieľovú šírku hárku (mm)</label>
+            <label>Zmeniť veľkosť — cieľové rozmery hárku (cm)</label>
             <div class="row">
-              <input id="targetW" type="number" step="1" placeholder="napr. 200">
+              <input id="targetW" type="number" step="0.1" placeholder="šírka">
+              <span style="align-self:center;color:var(--muted)">×</span>
+              <input id="targetH" type="number" step="0.1" placeholder="výška">
               <button class="btn sec" id="applyScale" style="width:auto;margin:0">Prepočítať</button>
             </div>
+            <div class="hint">Zadaj šírku aj výšku. Ak vyplníš len jedno, druhé sa dopočíta pomerovo.</div>
           </div>
           <div class="kv"><span>Mierka</span><b id="scalePct">100 %</b></div>
-          <div class="kv"><span>Nová výška</span><b id="newH">—</b></div>
+          <div class="kv"><span>Nový rozmer hárku</span><b id="newH">—</b></div>
 
           <button class="btn" id="dlSvg">Stiahnuť SVG (na tlač / rezanie)</button>
           <button class="btn sec" id="printBtn">Tlačiť v mierke 1:1</button>
@@ -213,7 +216,7 @@ function renderGrid(){
     c.innerHTML=`<div class="thumb"><img loading="lazy" src="photos/${i.code}.jpg" onerror="this.onerror=null;this.src='svg/${i.code}.svg'"></div>
       <div class="meta"><div class="code">${i.code}
       <span style="float:right;font-size:9px;color:#fff;background:${col};padding:1px 6px;border-radius:8px">${FAM_SHORT[i.fam]||''}</span></div>
-      <div class="dim">${i.w} × ${i.h} mm</div></div>`;
+      <div class="dim">${(i.w/10).toFixed(1)} × ${(i.h/10).toFixed(1)} cm</div></div>`;
     c.onclick=()=>openDetail(i);
     frag.appendChild(c);
   });
@@ -230,11 +233,11 @@ function openDetail(i){
   document.getElementById('catalogDetail').classList.remove('hidden');
   document.getElementById('detailImg').src='svg/'+i.code+'.svg';
   document.getElementById('detailCode').textContent=i.code;
-  document.getElementById('dW').textContent=i.w+' mm';
-  document.getElementById('dH').textContent=i.h+' mm';
+  document.getElementById('dW').textContent=(i.w/10).toFixed(1)+' cm';
+  document.getElementById('dH').textContent=(i.h/10).toFixed(1)+' cm';
   document.getElementById('dA').textContent=Math.round(i.w*i.h/100)/10+' cm²';
   document.getElementById('dFam').textContent=FAM_LABEL[i.fam]||'—';
-  document.getElementById('dEst').textContent=(i.estL&&i.fam!=='complex')?(i.estL+' × '+i.estW+' × '+i.estH+' mm'):'—';
+  document.getElementById('dEst').textContent=(i.estL&&i.fam!=='complex')?((i.estL/10).toFixed(1)+' × '+(i.estW/10).toFixed(1)+' × '+(i.estH/10).toFixed(1)+' cm'):'—';
   closeEdit2D();
   RS={fx:1,fy:1,sel:-1,base:0,dim:null};
   // foto zloženej krabice (photos/KOD.jpg), ak existuje
@@ -244,6 +247,7 @@ function openDetail(i){
   ph.onerror=()=>document.getElementById('photoWrap').style.display='none';
   ph.src='photos/'+i.code+'.jpg?'+Date.now();
   document.getElementById('targetW').value='';
+  document.getElementById('targetH').value='';
   document.getElementById('scalePct').textContent='100 %';
   document.getElementById('newH').textContent='—';
   resetCam(i.code);
@@ -497,18 +501,28 @@ function dlDXF(){
 }
 document.getElementById('editDxf').onclick=dlDXF;
 
-document.getElementById('applyScale').onclick=()=>{
-  const t=parseFloat(document.getElementById('targetW').value);
-  if(!t||!CUR)return;
-  const f=t/CUR.w;
-  document.getElementById('scalePct').textContent=Math.round(f*1000)/10+' %';
-  document.getElementById('newH').textContent=Math.round(CUR.h*f*10)/10+' mm';
-};
-// stiahnutie rozkresu v mm — offline z FOLDDATA, zohľadní cieľovú šírku hárku aj prepočet stien
+// prepočet: cieľová šírka/výška hárku v cm -> mierka (fx/fy). Vyplní sa aj len jedno (pomerovo).
+function computeScale(){
+  if(!CUR)return;
+  const wc=parseFloat(document.getElementById('targetW').value); // cm
+  const hc=parseFloat(document.getElementById('targetH').value); // cm
+  const haveW=wc>0, haveH=hc>0;
+  let fx=1, fy=1;
+  if(haveW&&haveH){ fx=(wc*10)/CUR.w; fy=(hc*10)/CUR.h; }
+  else if(haveW){ fx=fy=(wc*10)/CUR.w; }
+  else if(haveH){ fx=fy=(hc*10)/CUR.h; }
+  RS.fx=fx; RS.fy=fy;
+  const nW=CUR.w*fx/10, nH=CUR.h*fy/10;
+  document.getElementById('scalePct').textContent =
+    (Math.abs(fx-fy)<1e-6) ? (Math.round(fx*1000)/10+' %')
+                           : (Math.round(fx*1000)/10+' % š · '+Math.round(fy*1000)/10+' % v');
+  document.getElementById('newH').textContent = nW.toFixed(1)+' × '+nH.toFixed(1)+' cm';
+}
+document.getElementById('applyScale').onclick=computeScale;
+// stiahnutie rozkresu v mm 1:1 (offline z FOLDDATA), zohľadní zadané rozmery
 document.getElementById('dlSvg').onclick=()=>{
   if(!CUR)return;
-  const t=parseFloat(document.getElementById('targetW').value);
-  if(t>0){ const f=t/CUR.w; RS.fx=f; RS.fy=f; }
+  computeScale();
   dlScaled();
 };
 document.getElementById('printBtn').onclick=()=>{
