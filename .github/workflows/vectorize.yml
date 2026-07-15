@@ -1,0 +1,40 @@
+name: Vektorizovať náhľady krabíc
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'photos/orig/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: vectorize
+  cancel-in-progress: false
+
+jobs:
+  vectorize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Inštalovať nástroje
+        run: sudo apt-get update && sudo apt-get install -y imagemagick potrace librsvg2-bin
+
+      - name: Vektorizovať fotky
+        run: bash scripts/vectorize.sh
+
+      - name: Commitnúť náhľady
+        run: |
+          git config user.name "krabice-bot"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add photos/*.jpg
+          if git diff --cached --quiet; then
+            echo "Žiadne zmeny."
+          else
+            git commit -m "auto-vektorizácia náhľadov [skip ci]"
+            git push
+          fi
