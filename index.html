@@ -216,7 +216,7 @@ function renderGrid(){
     c.innerHTML=`<div class="thumb"><img loading="lazy" src="photos/${i.code}.jpg" onerror="this.onerror=null;this.src='svg/${i.code}.svg'"></div>
       <div class="meta"><div class="code">${i.code}
       <span style="float:right;font-size:9px;color:#fff;background:${col};padding:1px 6px;border-radius:8px">${FAM_SHORT[i.fam]||''}</span></div>
-      <div class="dim">${(i.w/10).toFixed(1)} × ${(i.h/10).toFixed(1)} cm</div></div>`;
+      <div class="dim">${i.w} × ${i.h} cm</div></div>`;
     c.onclick=()=>openDetail(i);
     frag.appendChild(c);
   });
@@ -233,11 +233,11 @@ function openDetail(i){
   document.getElementById('catalogDetail').classList.remove('hidden');
   document.getElementById('detailImg').src='svg/'+i.code+'.svg';
   document.getElementById('detailCode').textContent=i.code;
-  document.getElementById('dW').textContent=(i.w/10).toFixed(1)+' cm';
-  document.getElementById('dH').textContent=(i.h/10).toFixed(1)+' cm';
-  document.getElementById('dA').textContent=Math.round(i.w*i.h/100)/10+' cm²';
+  document.getElementById('dW').textContent=i.w+' cm';
+  document.getElementById('dH').textContent=i.h+' cm';
+  document.getElementById('dA').textContent=Math.round(i.w*i.h*10)/10+' cm²';
   document.getElementById('dFam').textContent=FAM_LABEL[i.fam]||'—';
-  document.getElementById('dEst').textContent=(i.estL&&i.fam!=='complex')?((i.estL/10).toFixed(1)+' × '+(i.estW/10).toFixed(1)+' × '+(i.estH/10).toFixed(1)+' cm'):'—';
+  document.getElementById('dEst').textContent=(i.estL&&i.fam!=='complex')?(i.estL+' × '+i.estW+' × '+i.estH+' cm'):'—';
   closeEdit2D();
   RS={fx:1,fy:1,sel:-1,base:0,dim:null};
   // foto zloženej krabice (photos/KOD.jpg), ak existuje
@@ -449,8 +449,8 @@ document.getElementById('dimApply').onclick=()=>{
 function buildScaledSVG(){
   const fd=getFD(); if(!fd)return null;
   const bb=sheetBBox(fd);
-  const Wmm=CUR.w*RS.fx, Hmm=CUR.h*RS.fy;
-  const sx=v=>((v-bb.minx)*RS.fx*(CUR.w/bb.w)).toFixed(2), sy=v=>((v-bb.miny)*RS.fy*(CUR.h/bb.h)).toFixed(2);
+  const Wmm=CUR.w*RS.fx*10, Hmm=CUR.h*RS.fy*10;   // hodnoty v cm -> mm (×10)
+  const sx=v=>((v-bb.minx)*RS.fx*(CUR.w/bb.w)*10).toFixed(2), sy=v=>((v-bb.miny)*RS.fy*(CUR.h/bb.h)*10).toFixed(2);
   let out='<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="'+Wmm.toFixed(1)+'mm" height="'+Hmm.toFixed(1)+'mm" viewBox="0 0 '+Wmm.toFixed(1)+' '+Hmm.toFixed(1)+'">\n';
   out+='<!-- '+CUR.code+' · plná čiara = rez, prerušovaná = ryha/ohyb · mierka 1:1 v mm -->\n';
   for(const s of fd.s){
@@ -463,14 +463,14 @@ function dlScaled(){
   const txt=buildScaledSVG(); if(!txt)return;
   const blob=new Blob([txt],{type:'image/svg+xml'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=CUR.code+'_'+Math.round(CUR.w*RS.fx)+'x'+Math.round(CUR.h*RS.fy)+'mm.svg';a.click();
+  a.download=CUR.code+'_'+Math.round(CUR.w*RS.fx*10)+'x'+Math.round(CUR.h*RS.fy*10)+'mm.svg';a.click();
 }
 document.getElementById('editDl').onclick=dlScaled;
 // DXF export — mm 1:1, tenké vektorové čiary, vrstvy REZ (plná) a OHYB (prerušovaná)
 function buildDXF(){
   const fd=getFD(); if(!fd)return null;
   const bb=sheetBBox(fd);
-  const kx=(CUR.w/bb.w)*RS.fx, ky=(CUR.h/bb.h)*RS.fy;
+  const kx=(CUR.w/bb.w)*RS.fx*10, ky=(CUR.h/bb.h)*RS.fy*10;   // cm -> mm (×10)
   const Hmm=bb.h*ky;
   const X=v=>((v-bb.minx)*kx).toFixed(3);
   const Y=v=>(Hmm-(v-bb.miny)*ky).toFixed(3); // DXF má os Y nahor
@@ -497,7 +497,7 @@ function dlDXF(){
   const txt=buildDXF(); if(!txt)return;
   const blob=new Blob([txt],{type:'application/dxf'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download=CUR.code+'_'+Math.round(CUR.w*RS.fx)+'x'+Math.round(CUR.h*RS.fy)+'mm.dxf';a.click();
+  a.download=CUR.code+'_'+Math.round(CUR.w*RS.fx*10)+'x'+Math.round(CUR.h*RS.fy*10)+'mm.dxf';a.click();
 }
 document.getElementById('editDxf').onclick=dlDXF;
 
@@ -508,11 +508,11 @@ function computeScale(){
   const hc=parseFloat(document.getElementById('targetH').value); // cm
   const haveW=wc>0, haveH=hc>0;
   let fx=1, fy=1;
-  if(haveW&&haveH){ fx=(wc*10)/CUR.w; fy=(hc*10)/CUR.h; }
-  else if(haveW){ fx=fy=(wc*10)/CUR.w; }
-  else if(haveH){ fx=fy=(hc*10)/CUR.h; }
+  if(haveW&&haveH){ fx=wc/CUR.w; fy=hc/CUR.h; }
+  else if(haveW){ fx=fy=wc/CUR.w; }
+  else if(haveH){ fx=fy=hc/CUR.h; }
   RS.fx=fx; RS.fy=fy;
-  const nW=CUR.w*fx/10, nH=CUR.h*fy/10;
+  const nW=CUR.w*fx, nH=CUR.h*fy;
   document.getElementById('scalePct').textContent =
     (Math.abs(fx-fy)<1e-6) ? (Math.round(fx*1000)/10+' %')
                            : (Math.round(fx*1000)/10+' % š · '+Math.round(fy*1000)/10+' % v');
@@ -527,7 +527,7 @@ document.getElementById('dlSvg').onclick=()=>{
 };
 document.getElementById('printBtn').onclick=()=>{
   const w=window.open('');
-  w.document.write('<img src="svg/'+CUR.code+'.svg" style="width:'+CUR.w+'mm">');
+  w.document.write('<img src="svg/'+CUR.code+'.svg" style="width:'+(CUR.w*10)+'mm">');
   w.document.close(); setTimeout(()=>w.print(),300);
 };
 
