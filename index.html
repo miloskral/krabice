@@ -151,14 +151,24 @@
           <!-- ====== FOTENIE ZLOŽENEJ KRABICE ====== -->
           <div id="camBox">
             <h3 style="font-size:14px;margin:0 0 4px">📷 Odfotiť z knihy</h3>
-            <div class="hint">Odfoť zloženú krabicu z knihy. Fotka sa uloží pod kódom <b id="camCode">—</b>, aby sa dala ľahko zaradiť do katalógu.</div>
+            <div class="hint">Odfoť zloženú krabicu z knihy pod kódom <b id="camCode">—</b>. Nahrá sa rovno do katalógu (GitHub) a Claude ju prekreslí.</div>
             <input id="camInput" type="file" accept="image/*" capture="environment" style="display:none">
             <button class="btn" id="camBtn" style="background:var(--accent2)">📷 Odfotiť / vybrať fotku</button>
             <div id="camPreviewWrap" style="display:none;background:#fff;border-radius:8px;padding:6px;margin:10px 0;text-align:center">
               <img id="camPreview" src="" style="max-height:200px;max-width:100%">
             </div>
-            <button class="btn" id="camSave" style="display:none">⬇ Uložiť fotku (<span id="camSaveName">SPD.jpg</span>)</button>
-            <div class="hint" id="camHint" style="display:none">Fotka sa stiahla do telefónu. Pošli mi ju a ja ju prekreslím do katalógu.</div>
+            <button class="btn" id="camUpload" style="display:none;background:var(--accent)">☁️ Nahrať do katalógu (<span id="camUpName">SPD.jpg</span>)</button>
+            <button class="btn sec" id="camSave" style="display:none">⬇ Alebo len stiahnuť do telefónu</button>
+            <div class="hint" id="camStatus" style="display:none"></div>
+
+            <!-- token setup -->
+            <div id="ghSetup" style="display:none;margin-top:10px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px">
+              <div class="hint" style="margin-top:0">Na nahrávanie treba jednorazovo GitHub token (uloží sa len v tomto telefóne).</div>
+              <input id="ghToken" type="password" placeholder="ghp_… / github_pat_…" style="width:100%;margin:6px 0">
+              <button class="btn" id="ghSave" style="margin:0">Uložiť token</button>
+              <div class="hint"><a href="https://github.com/settings/tokens?type=beta" target="_blank" style="color:var(--accent)">Vytvoriť token →</a> (Fine-grained · repo <b>krabice</b> · Contents: Read and write)</div>
+            </div>
+            <div class="hint" id="ghChange" style="display:none"><a href="#" id="ghChangeLink" style="color:var(--muted)">zmeniť GitHub token</a></div>
           </div>
 
           <div style="height:1px;background:var(--line);margin:16px 0"></div>
@@ -507,35 +517,93 @@ document.getElementById('printBtn').onclick=()=>{
   w.document.close(); setTimeout(()=>w.print(),300);
 };
 
-/* ================= FOTENIE ZLOŽENEJ KRABICE ================= */
-let CAM_CODE=null, CAM_URL=null;
-function resetCam(code){
-  CAM_CODE=code;
-  document.getElementById('camCode').textContent=code;
-  document.getElementById('camSaveName').textContent=code+'.jpg';
-  document.getElementById('camInput').value='';
-  document.getElementById('camPreviewWrap').style.display='none';
-  document.getElementById('camSave').style.display='none';
-  document.getElementById('camHint').style.display='none';
-  if(CAM_URL){ URL.revokeObjectURL(CAM_URL); CAM_URL=null; }
+/* ================= FOTENIE ZLOŽENEJ KRABICE + UPLOAD NA GITHUB ================= */
+const GH_OWNER='miloskral', GH_REPO='krabice', GH_BRANCH='main';
+let CAM_CODE=null, CAM_URL=null, CAM_FILE=null;
+const $=id=>document.getElementById(id);
+function ghToken(){ return localStorage.getItem('gh_token')||''; }
+function refreshGhUI(){
+  const has=!!ghToken();
+  $('ghSetup').style.display=has?'none':'block';
+  $('ghChange').style.display=has?'block':'none';
 }
-document.getElementById('camBtn').onclick=()=>document.getElementById('camInput').click();
-document.getElementById('camInput').onchange=e=>{
+function resetCam(code){
+  CAM_CODE=code; CAM_FILE=null;
+  $('camCode').textContent=code;
+  $('camUpName').textContent=code+'.jpg';
+  $('camInput').value='';
+  $('camPreviewWrap').style.display='none';
+  $('camUpload').style.display='none';
+  $('camSave').style.display='none';
+  $('camStatus').style.display='none';
+  if(CAM_URL){ URL.revokeObjectURL(CAM_URL); CAM_URL=null; }
+  refreshGhUI();
+}
+$('camBtn').onclick=()=>$('camInput').click();
+$('camInput').onchange=e=>{
   const f=e.target.files&&e.target.files[0];
   if(!f)return;
+  CAM_FILE=f;
   if(CAM_URL) URL.revokeObjectURL(CAM_URL);
   CAM_URL=URL.createObjectURL(f);
-  const img=document.getElementById('camPreview');
-  img.src=CAM_URL;
-  document.getElementById('camPreviewWrap').style.display='block';
-  document.getElementById('camSave').style.display='block';
-  document.getElementById('camHint').style.display='none';
+  $('camPreview').src=CAM_URL;
+  $('camPreviewWrap').style.display='block';
+  $('camUpload').style.display='block';
+  $('camSave').style.display='block';
+  $('camStatus').style.display='none';
+  refreshGhUI();
 };
-document.getElementById('camSave').onclick=()=>{
+$('camSave').onclick=()=>{
   if(!CAM_URL||!CAM_CODE)return;
   const a=document.createElement('a');
   a.href=CAM_URL; a.download=CAM_CODE+'.jpg'; a.click();
-  document.getElementById('camHint').style.display='block';
+};
+$('ghSave').onclick=()=>{
+  const t=$('ghToken').value.trim();
+  if(!t){ return; }
+  localStorage.setItem('gh_token',t);
+  $('ghToken').value='';
+  refreshGhUI();
+  setStatus('Token uložený. Môžeš nahrávať.', 'ok');
+};
+$('ghChangeLink').onclick=e=>{ e.preventDefault(); localStorage.removeItem('gh_token'); refreshGhUI(); };
+function setStatus(msg,kind){
+  const s=$('camStatus');
+  s.style.display='block';
+  s.textContent=msg;
+  s.style.color = kind==='ok'?'var(--accent2)' : kind==='err'?'#ff6b6b' : 'var(--muted)';
+}
+function fileToB64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(String(r.result).split(',')[1]);
+    r.onerror=rej;
+    r.readAsDataURL(file);
+  });
+}
+async function ghPut(path, b64, message){
+  const api=`https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/contents/${path}`;
+  const headers={Authorization:'token '+ghToken(), Accept:'application/vnd.github+json'};
+  let sha;
+  try{ const g=await fetch(api+'?ref='+GH_BRANCH,{headers}); if(g.ok){ sha=(await g.json()).sha; } }catch(e){}
+  const body={message, content:b64, branch:GH_BRANCH};
+  if(sha) body.sha=sha;
+  const r=await fetch(api,{method:'PUT',headers,body:JSON.stringify(body)});
+  if(!r.ok){ throw new Error(r.status+' '+(await r.text()).slice(0,160)); }
+  return r.json();
+}
+$('camUpload').onclick=async()=>{
+  if(!CAM_FILE||!CAM_CODE)return;
+  if(!ghToken()){ refreshGhUI(); setStatus('Najprv vlož GitHub token nižšie.', 'err'); return; }
+  const btn=$('camUpload'); btn.disabled=true;
+  setStatus('Nahrávam '+CAM_CODE+'.jpg…', 'info');
+  try{
+    const b64=await fileToB64(CAM_FILE);
+    await ghPut('photos/orig/'+CAM_CODE+'.jpg', b64, 'foto '+CAM_CODE+' (z apky)');
+    setStatus('✅ Nahraté! Claude ju teraz prekreslí do katalógu.', 'ok');
+  }catch(err){
+    setStatus('Chyba: '+err.message+' — skontroluj token (Contents: Read and write).', 'err');
+  }finally{ btn.disabled=false; }
 };
 
 renderGrid();
