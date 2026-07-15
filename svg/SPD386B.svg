@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="397.85pt" height="122.71pt" viewBox="0 0 397.85 122.71" version="1.2">
+<defs>
+<clipPath id="clip1">
+  <path d="M 0.394531 0 L 397.304688 0 L 397.304688 122.421875 L 0.394531 122.421875 Z M 0.394531 0 "/>
+</clipPath>
+<clipPath id="clip2">
+  <path d="M 71 0 L 72 0 L 72 122.421875 L 71 122.421875 Z M 71 0 "/>
+</clipPath>
+<clipPath id="clip3">
+  <path d="M 91 0 L 93 0 L 93 122.421875 L 91 122.421875 Z M 91 0 "/>
+</clipPath>
+<clipPath id="clip4">
+  <path d="M 166 0 L 167 0 L 167 122.421875 L 166 122.421875 Z M 166 0 "/>
+</clipPath>
+<clipPath id="clip5">
+  <path d="M 187 0 L 188 0 L 188 122.421875 L 187 122.421875 Z M 187 0 "/>
+</clipPath>
+<clipPath id="clip6">
+  <path d="M 269 0 L 270 0 L 270 122.421875 L 269 122.421875 Z M 269 0 "/>
+</clipPath>
+<clipPath id="clip7">
+  <path d="M 289 0 L 291 0 L 291 122.421875 L 289 122.421875 Z M 289 0 "/>
+</clipPath>
+<clipPath id="clip8">
+  <path d="M 372 0 L 373 0 L 373 122.421875 L 372 122.421875 Z M 372 0 "/>
+</clipPath>
+</defs>
+<g id="surface1">
+<g clip-path="url(#clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-miterlimit:4;" d="M 5.015267 1222.127338 L 3973.512512 1222.127338 L 3973.512512 4.999876 L 5.015267 4.999876 Z M 5.015267 1222.127338 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 714.93124 1222.127338 L 714.93124 4.999876 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip3)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 917.909808 5.900436 L 917.909808 1222.127338 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip4)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 1667.372145 1222.127338 L 1667.372145 5.900436 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip5)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 1876.772102 4.999876 L 1876.772102 1222.127338 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip6)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 2699.688875 1223.027899 L 2699.688875 4.999876 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip7)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 2903.568003 4.13847 L 2903.568003 1222.127338 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+<g clip-path="url(#clip8)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 3728.325052 1223.027899 L 3728.325052 5.900436 " transform="matrix(0.0997642,0,0,-0.0997642,0.394187,122.420684)"/>
+</g>
+</g>
+</svg>

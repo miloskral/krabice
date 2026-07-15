@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="397.85pt" height="208.88pt" viewBox="0 0 397.85 208.88" version="1.2">
+<defs>
+<clipPath id="clip1">
+  <path d="M 0.0390625 0 L 397.660156 0 L 397.660156 208.761719 L 0.0390625 208.761719 Z M 0.0390625 0 "/>
+</clipPath>
+<clipPath id="clip2">
+  <path d="M 27 0 L 28 0 L 28 208.761719 L 27 208.761719 Z M 27 0 "/>
+</clipPath>
+<clipPath id="clip3">
+  <path d="M 42 0 L 44 0 L 44 208.761719 L 42 208.761719 Z M 42 0 "/>
+</clipPath>
+<clipPath id="clip4">
+  <path d="M 77 0 L 78 0 L 78 208.761719 L 77 208.761719 Z M 77 0 "/>
+</clipPath>
+<clipPath id="clip5">
+  <path d="M 91 0 L 93 0 L 93 208.761719 L 91 208.761719 Z M 91 0 "/>
+</clipPath>
+<clipPath id="clip6">
+  <path d="M 132 0 L 133 0 L 133 208.761719 L 132 208.761719 Z M 132 0 "/>
+</clipPath>
+<clipPath id="clip7">
+  <path d="M 232 0 L 233 0 L 233 208.761719 L 232 208.761719 Z M 232 0 "/>
+</clipPath>
+<clipPath id="clip8">
+  <path d="M 265 0 L 267 0 L 267 208.761719 L 265 208.761719 Z M 265 0 "/>
+</clipPath>
+<clipPath id="clip9">
+  <path d="M 305 0 L 306 0 L 306 208.761719 L 305 208.761719 Z M 305 0 "/>
+</clipPath>
+<clipPath id="clip10">
+  <path d="M 320 0 L 321 0 L 321 208.761719 L 320 208.761719 Z M 320 0 "/>
+</clipPath>
+<clipPath id="clip11">
+  <path d="M 354 0 L 356 0 L 356 208.761719 L 354 208.761719 Z M 354 0 "/>
+</clipPath>
+</defs>
+<g id="surface1">
+<g clip-path="url(#clip1)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:10;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-miterlimit:4;" d="M 9.691106 2083.758043 L 3973.529494 2083.758043 L 3973.529494 4.986364 L 5.000913 4.986364 Z M 9.691106 2083.758043 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip2)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 272.693674 2088.448236 L 272.693674 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip3)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 427.704551 2083.758043 L 427.704551 4.986364 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip4)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 775.208762 2083.758043 L 775.208762 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip5)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 920.839253 2083.758043 L 920.839253 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip6)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 1324.703949 2088.448236 L 1324.703949 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 1653.447389 2088.448236 L 1653.447389 14.405835 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+<g clip-path="url(#clip7)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 2325.083017 2083.758043 L 2325.083017 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip8)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 2663.206843 2083.758043 L 2663.206843 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip9)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 3057.691153 2088.448236 L 3057.691153 4.986364 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip10)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 3207.972752 2083.758043 L 3207.972752 9.676557 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<g clip-path="url(#clip11)" clip-rule="nonzero">
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 3550.825855 2079.06785 L 3550.825855 4.986364 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+<path style="fill:none;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke:rgb(13.729858%,12.159729%,12.548828%);stroke-opacity:1;stroke-dasharray:30;stroke-miterlimit:4;" d="M 3710.526925 2079.06785 L 3710.526925 19.096028 " transform="matrix(0.0999426,0,0,-0.0999426,0.0392584,208.760069)"/>
+</g>
+</svg>
